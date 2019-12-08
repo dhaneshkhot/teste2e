@@ -55,7 +55,7 @@ public class TravelexTestSteps extends ScenarioSteps {
 
         Actions action=new Actions(driver);
         action.dragAndDropBy(slider, -200, 0).build().perform();
-        Thread.sleep(2500);
+        Thread.sleep(3000);
     }
 
     @And("I swipe left again")
