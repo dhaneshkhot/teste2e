@@ -3,6 +3,7 @@ package com.example.dk.rest.steps;
 import com.example.dk.rest.model.Comment;
 import com.example.dk.rest.model.Post;
 import com.google.gson.Gson;
+import config.Config;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,7 +11,11 @@ import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.steps.ScenarioSteps;
+import org.apache.commons.configuration2.Configuration;
 import org.eclipse.jetty.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import utils.PropertyLoader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,14 +23,19 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@ContextConfiguration(classes = {Config.class})
 public class FakeApiPostsTestSteps extends ScenarioSteps {
     private Response response;
     String baseUrl = "https://jsonplaceholder.typicode.com";
     String apiUrl;
     Gson gson = new Gson();
 
+    @Autowired
+    Configuration config;
+
     @Given("^I have a /posts API endpoint$")
     public void i_have_a_posts_API_endpoint() {
+        System.out.println("Reading from properties--- " + config.getString("fakeApiBaseUrl"));
         apiUrl = baseUrl + "/posts";
     }
 
